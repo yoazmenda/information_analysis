@@ -6,6 +6,10 @@ public class Dictionary {
 
 	public Dictionary(ArrayList<File> trainingSetFiles) {
 		// TODO Auto-generated constructor stub
+		
+		
+		
+		
 	}
 
 }
