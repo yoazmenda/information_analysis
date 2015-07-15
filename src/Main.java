@@ -45,12 +45,14 @@ public class Main {
 	if(!output.exists()){
 		output.createNewFile();
 	}
+	
+	//read files and build dictionary and message list
 	FileWriter fw = new FileWriter(output.getAbsoluteFile());
 	BufferedWriter bw = new BufferedWriter(fw);
 	bw.write(new Date().toString()+"\n");
-	bw.write("Learning results:\n");
-
-	Dictionary dict = new Dictionary(trainingSetFiles);
+	bw.write("Learning results:\n");	
+	//ArrayList<Message> messages=new ArrayList<>();
+	Dictionary dict = new Dictionary(trainingSetFiles, validationPercantage);//, messages);
 	
 	
 	
