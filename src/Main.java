@@ -1,71 +1,87 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import sun.org.mozilla.javascript.JavaAdapter;
- 
 
 public class Main {
 
-	
-	public static void main(String argv[]) throws IOException{
-	//command line validation
-	if (argv.length != 5){
-		System.err.println("input error: usage example: tree_learn traindir/ test.examples 25 7 output.txt");
-		System.err.printf("argv length: %d\n",argv.length);
-		System.exit(-1);
-	}
-	
-	//get training set and test files	
-	File trainDir = new File(argv[0]);
-	File[] dirents= trainDir.listFiles();
-	ArrayList<File> trainingSetFiles = new ArrayList<>();
-	File testExamples = null;
-	File testLabels= null;
-	for (int i = 0; i < dirents.length; i++){
-		File dirent = dirents[i]; 
-		if (dirent.getName().contains(".train")){
-			trainingSetFiles.add(dirent);
+	public static void main(String argv[]) throws IOException {
+		// command line validation
+		if (argv.length != 5) {
+			System.err
+					.println("input error: usage example: tree_learn traindir/ test.examples 25 7 output.txt");
+			System.err.printf("argv length: %d\n", argv.length);
+			System.exit(-1);
 		}
-		if(dirent.getName().contains(".examples")){
-			testExamples = dirent;
+
+		// get training set and test files
+		File trainDir = new File(argv[0]);
+		File[] dirents = trainDir.listFiles();
+		ArrayList<File> trainingSetFiles = new ArrayList<>();
+		ArrayList<File> files = new ArrayList<>();
+		File testExamples = null;
+		File testLabels = null;
+		for (int i = 0; i < dirents.length; i++) {
+			File dirent = dirents[i];
+			if (dirent.getName().contains(".train")) {
+				trainingSetFiles.add(dirent);
+			}
+			if (dirent.getName().contains(".examples")) {
+				testExamples = dirent;
+			}
+			if (dirent.getName().contains(".labels")) {
+				testLabels = dirent;
+			}
 		}
-		if(dirent.getName().contains(".labels")){
-			testLabels = dirent;
+		for (int i = 0; i < trainingSetFiles.size(); i++) {
+			files.add(trainingSetFiles.get(i));
 		}
-	}
-	int numOfClassifications = trainingSetFiles.size();	
-	double validationPercantage = Double.parseDouble(argv[2]);	
-	int L = Integer.parseInt(argv[3]);
-	File output = new File(argv[4]);			
-	if(!output.exists()){
-		output.createNewFile();
-	}
-	
-	//read files and build dictionary and message list
-	FileWriter fw = new FileWriter(output.getAbsoluteFile());
-	BufferedWriter bw = new BufferedWriter(fw);
-	bw.write(new Date().toString()+"\n");
-	bw.write("Learning results:\n");	
-	//ArrayList<Message> messages=new ArrayList<>();
-	Dictionary dict = new Dictionary(trainingSetFiles, validationPercantage);//, messages);
-	
-	
-	
-	
-	
-	
-	
-	
-	bw.close();
-	}//end main
+		files.add(testExamples);
+		System.out.println(files);
+		int numOfClassifications = trainingSetFiles.size();
+		double validationPercantage = Double.parseDouble(argv[2]) / 100;
+		int L = Integer.parseInt(argv[3]);
+		File output = new File(argv[4]);
+		if (!output.exists()) {
+			output.createNewFile();
+		}
+
+		// read files and build dictionary
+		FileWriter fw = new FileWriter(output.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(new Date().toString() + "\n");
+		bw.write("Learning results:\n");
+		Dictionary dict = new Dictionary(files);
+		dict.printDictionary();
+
+		// create messages objects(for learning and validation)
+		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels,
+				dict);
+		ArrayList<Message> validationMessages = new ArrayList<Message>();
+
+		// move some to validation
+		int numOfValidation = (int)Math.floor(messages.size() * validationPercantage);
+		for (int i = 0; i < numOfValidation; i++) {
+			int rand = (int) Math.floor(Math.random() * (messages.size()));
+			System.out.printf("range: %d, rand: %d\n", messages.size(), rand);
+			Message temp = messages.get(i);
+			messages.remove(i);
+			validationMessages.add(temp);
+		}
 		
 		
 		
 		
-		
+		bw.close();
+	}// end main
+
 }
+
