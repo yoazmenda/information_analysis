@@ -13,6 +13,7 @@ public class Parser {
 			file = files.get(i);
 			String fileName = file.getName().substring(0, file.getName().indexOf('.'));			
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+				@SuppressWarnings("resource")
 				BufferedReader labelReader = new BufferedReader(new FileReader(labels));
 				String line;
 				// read messages from file and parse each line

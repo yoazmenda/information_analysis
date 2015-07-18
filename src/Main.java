@@ -1,15 +1,9 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import sun.org.mozilla.javascript.JavaAdapter;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Main {
 
@@ -46,9 +40,9 @@ public class Main {
 		}
 		files.add(testExamples);
 		System.out.println(files);
-		int numOfClassifications = trainingSetFiles.size();
+		//int numOfClassifications = trainingSetFiles.size();
 		double validationPercantage = Double.parseDouble(argv[2]) / 100;
-		int L = Integer.parseInt(argv[3]);
+		//int L = Integer.parseInt(argv[3]);
 		File output = new File(argv[4]);
 		if (!output.exists()) {
 			output.createNewFile();

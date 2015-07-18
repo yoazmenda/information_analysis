@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.math.*;
+//import java.math.*;
 
 public class Dictionary {
 
