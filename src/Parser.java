@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Parser {
 	static int ppp = 0;
-	public static ArrayList<Message> CreateMessages(ArrayList<File> files, File labels, Dictionary dict) {
+	public static ArrayList<Message> CreateMessages(ArrayList<File> files, File labels) {
 		File file = null;
 		ArrayList<Message> messages = new ArrayList<>();
 		for (int i = 0; i < files.size(); i++) {
@@ -42,7 +42,7 @@ public class Parser {
 						newMsg.setForTesting();						
 					}
 					for (int k = 0; k < wordList.size(); k++){
-						newMsg.setWord(wordList.get(k), dict);
+						newMsg.setWord(wordList.get(k), Main.dict);
 					}
 					messages.add(newMsg);
 				}

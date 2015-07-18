@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.BitSet;
 
 public class Message {
@@ -45,16 +46,45 @@ public class Message {
 		return this.classification; 
 	}
 	
+	public boolean contains(String word){		
+		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i+1)) {
+		     if (Main.dict.lookupByIndex(i).equals(word)){		    	
+		    	 return true;
+		     }		     
+		}		
+		return false;
+	}
+	
 	public void printMessageIndices(){
 		System.out.println(this.bitset.toString());
 	}
 
-	public void print(Dictionary dict) {
+	public void print() {
 		System.out.printf("%d: ", classification);
 		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i+1)) {
-		     System.out.printf("%s ", dict.lookupByIndex(i));
+		     System.out.printf("%s ", Main.dict.lookupByIndex(i));
 		 }
 		System.out.println();
 	}
+	
+	public static int mostCommonClassification(ArrayList<Message> messages){			
+	  	int count[] = new int[Main.MAXCLASSIFICATION];		
+		//count for each forum how many messages it has	  	  		  	
+		for (int i = 0; i < messages.size(); i++){			
+			count[messages.get(i).classification]++;
+		}
+		int max = 0;
+		int best_i= 0;
+		for (int i = 1; i <= Main.numOfClassifications; i++){
+			if (max < count[i]) {
+				max = count[i];
+				best_i = i;
+			}
+		}		
+		return best_i;		
+	}
+	
+	
+	
 	
 }

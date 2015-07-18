@@ -1,0 +1,9 @@
+improvemtnt:
+1. compute the most common forum can be improved in two ways:
+	- we can maintain a field for each node of all the messages it has.
+	- when computing on this set, which forum is most common - we can use counting sort because we know that the forum numbers are in range [1,2,3,4] and we have
+	
+	
+2. Tree class line 37 delete old messages from inner nodes
+
+3. when constructing the tree we can save only the best tree so far and the current tree being tested. so we can save memory and improve perfomance

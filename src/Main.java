@@ -4,9 +4,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.math.*;
 
 public class Main {
-
+	public static Dictionary dict;
+	public static int numOfClassifications = 0;
+	public static int MAXCLASSIFICATION = 50;
+	
+	
+	
+	
 	public static void main(String argv[]) throws IOException {
 		// command line validation
 		if (argv.length != 5) {
@@ -35,12 +42,13 @@ public class Main {
 				testLabels = dirent;
 			}
 		}
-		for (int i = 0; i < trainingSetFiles.size(); i++) {
+		numOfClassifications = trainingSetFiles.size();
+		for (int i = 0; i < numOfClassifications; i++) {
 			files.add(trainingSetFiles.get(i));
+			
 		}
-		files.add(testExamples);
-		System.out.println(files);
-		//int numOfClassifications = trainingSetFiles.size();
+
+		files.add(testExamples);		
 		double validationPercantage = Double.parseDouble(argv[2]) / 100;
 		int L = Integer.parseInt(argv[3]);
 		File output = new File(argv[4]);
@@ -49,15 +57,18 @@ public class Main {
 		}
 
 		// read all files and build dictionary
+		System.out.println("reading files from disk...");
 		FileWriter fw = new FileWriter(output.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(new Date().toString() + "\n");
 		bw.write("Learning results:\n");
-		Dictionary dict = new Dictionary(files);		
+		dict = new Dictionary(files);		
 
 		//create messages objects from all files (test also)(for learning and validation)
-		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels,dict);
-		System.out.println(messages.size());
+		System.out.println("creating and parsing messages...");
+		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels);		
+		
+		
 		//divide to testing and learning messages:		
 		ArrayList<Message> testingMessages = new ArrayList<Message>();
 		Message temp = null;
@@ -83,9 +94,43 @@ public class Main {
 		for (int i = 0; i < validationMessages.size(); i++){
 			messages.remove(validationMessages.get(i));
 		}	
+			
+
+		
+		//build trees in different sizes and test them on the validation messages
+		Tree bestTree = null;
+		Tree currentTree = null;
+		double result;
+		double bestTreeResult = 0;
+		for (int T = (int) Math.pow(2, 0); T <= Math.pow(2, L);  T *= 2){
+//			System.out.printf("buildint tree with %d inner nodes\n", T);
+			currentTree = new Tree(messages, T);
+			result = currentTree.testResults(validationMessages);
+			System.out.printf("result of tree if size %d: %f\n", T, result);
+			if (result >= bestTreeResult) {
+				bestTree = currentTree;	
+				bestTreeResult = result;
+			}
+		}		
+		
+		System.out.println("testing the best tree on the test examples");
+		result = bestTree.testResults(testingMessages);
+		System.out.printf("Success Rate: %f\n", result);
+		bw.close();								
 		
 		
-		bw.close();
+		System.exit(0);
+		
+		
+		
+		
+		 
+		
+		
+		
+		
+		
+
 	}// end main
 
 }
