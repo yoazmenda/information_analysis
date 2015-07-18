@@ -120,7 +120,7 @@ public class Main {
 		
 		
 		
-		//print results
+		//print results on screen and to output file
 		System.out.printf("Best Tree size (on validation): %d\n", bestTree.getSize());
 		System.out.println("testing the best tree on the test examples");
 		result = bestTree.testResults(testingMessages,bw);

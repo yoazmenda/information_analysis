@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tree {
@@ -57,7 +58,15 @@ public class Tree {
 		Message msg;
 		for (int i = 0; i < messages.size(); i++) {
 			msg = messages.get(i);
-			if (predict(msg) == msg.getClassification()) {
+			int prediction = predict(msg);
+			if (bw != null){
+				try {
+					bw.write(Integer.toString(prediction)+"\n");
+				} catch (IOException e) {					
+					e.printStackTrace();
+				}
+			}
+			if (prediction  == msg.getClassification()) {
 				hits++;
 			} else {
 				misses++;
