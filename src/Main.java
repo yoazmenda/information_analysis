@@ -118,15 +118,13 @@ public class Main {
 			}
 		}		
 		
-		System.out.println(bestTree.getSize());
-		for (int i=0;i<testingMessages.size();i++){
-			System.out.printf("Prediction: %d; Reality: %d\n", bestTree.predict(testingMessages.get(i)), testingMessages.get(i).getClassification());
-		}
 		
-//		
-//		System.out.println("testing the best tree on the test examples");
-//		result = bestTree.testResults(testingMessages,bw);
-//		System.out.printf("Success Rate: %f\n", result);
+		
+		//print results
+		System.out.printf("Best Tree size (on validation): %d\n", bestTree.getSize());
+		System.out.println("testing the best tree on the test examples");
+		result = bestTree.testResults(testingMessages,bw);
+		System.out.printf("Success Rate: %f\n", result);
 		bw.close();								
 		
 		
