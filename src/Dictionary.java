@@ -8,12 +8,12 @@ public class Dictionary {
 	private int wordCount;
 
 	// parses files. builds dictionary. build messages.
-	public Dictionary(ArrayList<File> trainingSetFiles) {
+	public Dictionary(ArrayList<File> files) {
 		File file = null;
 		wordList = new ArrayList<>();
 		wordCount = 0;
-		for (int i = 0; i < trainingSetFiles.size(); i++) {
-			file = trainingSetFiles.get(i);			
+		for (int i = 0; i < files.size(); i++) {
+			file = files.get(i);			
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 				String line;
 				// read messages from file and parse each line

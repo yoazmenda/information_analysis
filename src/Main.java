@@ -42,39 +42,47 @@ public class Main {
 		System.out.println(files);
 		//int numOfClassifications = trainingSetFiles.size();
 		double validationPercantage = Double.parseDouble(argv[2]) / 100;
-		//int L = Integer.parseInt(argv[3]);
+		int L = Integer.parseInt(argv[3]);
 		File output = new File(argv[4]);
 		if (!output.exists()) {
 			output.createNewFile();
 		}
 
-		// read files and build dictionary
+		// read all files and build dictionary
 		FileWriter fw = new FileWriter(output.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(new Date().toString() + "\n");
 		bw.write("Learning results:\n");
-		Dictionary dict = new Dictionary(files);
-		dict.printDictionary();
+		Dictionary dict = new Dictionary(files);		
 
-		// create messages objects(for learning and validation)
+		//create messages objects from all files (test also)(for learning and validation)
 		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels,dict);
+		System.out.println(messages.size());
+		//divide to testing and learning messages:		
+		ArrayList<Message> testingMessages = new ArrayList<Message>();
+		Message temp = null;
+		for (int i = 0; i<messages.size(); i ++){
+			temp = messages.get(i);
+			if (temp.isForTesting()){				
+				testingMessages.add(temp);
+			}
+		}
+		for (int i = 0; i < testingMessages.size(); i++){
+			messages.remove(testingMessages.get(i));
+		}
 	
-//		// move some to validation
-//		ArrayList<Message> validationMessages = new ArrayList<Message>();
-//		int numOfValidation = (int)Math.floor(messages.size() * validationPercantage);
-//		for (int i = 0; i < numOfValidation; i++) {
-//			int rand = (int) Math.floor(Math.random() * (messages.size()));
-//			System.out.printf("range: %d, rand: %d\n", messages.size(), rand);
-//			Message temp = messages.get(i);
-//			messages.remove(i);
-//			validationMessages.add(temp);
-//		}
-//		
-//		//build tree with different sizes and take maximum over validation
-		for (int i = 0; i< messages.size(); i++){
-			messages.get(i).print(dict);
+		// move some of training messages to be validation messages (according to validationPercantage parameter)
+		ArrayList<Message> validationMessages = new ArrayList<Message>();
+		int numOfValidation = (int)Math.floor(messages.size() * validationPercantage);
+		for (int i = 0; i < numOfValidation; i++) {
+			int rand = (int) Math.floor(Math.random() * (messages.size()));					
+			temp = messages.get(rand);
+			validationMessages.add(temp);
 		}
 		
+		for (int i = 0; i < validationMessages.size(); i++){
+			messages.remove(validationMessages.get(i));
+		}	
 		
 		
 		bw.close();

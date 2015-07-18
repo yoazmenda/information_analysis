@@ -4,14 +4,16 @@ public class Message {
 
 	private BitSet bitset;
 	private int classification;
-	
+	private Boolean testing;
 	
 	public Message(){
 		this.bitset = new BitSet();
 		this.classification = 0;
+		testing = false;
 	}
 	
 	public Message(String str, Dictionary dict, int classification) {
+		testing = false;
 		this.bitset = new BitSet();
 		this.classification = 0;
 		String[] words = str.split("\\s+");		
@@ -20,7 +22,13 @@ public class Message {
 		}
 		this.classification = classification;
 	}
-
+	public void setForTesting(){
+		testing = true;
+	}
+	
+	public Boolean isForTesting(){
+		return testing;
+	}
 	public void setWordIndex(int n){		
 		bitset.set(n);
 	}

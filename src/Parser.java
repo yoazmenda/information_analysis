@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Parser {
-
+	static int ppp = 0;
 	public static ArrayList<Message> CreateMessages(ArrayList<File> files, File labels, Dictionary dict) {
 		File file = null;
 		ArrayList<Message> messages = new ArrayList<>();
@@ -34,11 +34,12 @@ public class Parser {
 					
 					//set classification
 					Message newMsg = new Message();
-					if (!fileName.equals("test")){
+					if (!fileName.equals("test")){ //message belongs to training set
 						newMsg.setClassification(Integer.parseInt(fileName));
 					}
-					else{
+					else{ // message is from test.examples
 						newMsg.setClassification(Integer.parseInt(labelReader.readLine()));
+						newMsg.setForTesting();						
 					}
 					for (int k = 0; k < wordList.size(); k++){
 						newMsg.setWord(wordList.get(k), dict);
