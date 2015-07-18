@@ -57,20 +57,23 @@ public class Main {
 		dict.printDictionary();
 
 		// create messages objects(for learning and validation)
-		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels,
-				dict);
-		ArrayList<Message> validationMessages = new ArrayList<Message>();
-
-		// move some to validation
-		int numOfValidation = (int)Math.floor(messages.size() * validationPercantage);
-		for (int i = 0; i < numOfValidation; i++) {
-			int rand = (int) Math.floor(Math.random() * (messages.size()));
-			System.out.printf("range: %d, rand: %d\n", messages.size(), rand);
-			Message temp = messages.get(i);
-			messages.remove(i);
-			validationMessages.add(temp);
+		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels,dict);
+	
+//		// move some to validation
+//		ArrayList<Message> validationMessages = new ArrayList<Message>();
+//		int numOfValidation = (int)Math.floor(messages.size() * validationPercantage);
+//		for (int i = 0; i < numOfValidation; i++) {
+//			int rand = (int) Math.floor(Math.random() * (messages.size()));
+//			System.out.printf("range: %d, rand: %d\n", messages.size(), rand);
+//			Message temp = messages.get(i);
+//			messages.remove(i);
+//			validationMessages.add(temp);
+//		}
+//		
+//		//build tree with different sizes and take maximum over validation
+		for (int i = 0; i< messages.size(); i++){
+			messages.get(i).print(dict);
 		}
-		
 		
 		
 		
