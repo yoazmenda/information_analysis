@@ -1,13 +1,19 @@
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 public class Tree {
 	private Node root;
-
+	private int size;
 	public Tree(ArrayList<Message> messages, int innerNodes) {
 		root = new Node(messages);
+		size = innerNodes;
 		for (int i = 0; i < innerNodes; i++) {
 			improve();
 		}
+	}
+	
+	public int getSize(){
+		return size;
 	}
 
 	// this procedure selects a leaf and a word and then splits the leaf and creates two new leaves
@@ -43,7 +49,7 @@ public class Tree {
 
 	// input: a message object
 	// output: an integer - classification prediction
-	public double testResults(ArrayList<Message> messages) {
+	public double testResults(ArrayList<Message> messages, BufferedWriter bw) {
 		if (messages.size() <= 0)
 			return -1;
 		int hits = 0;
@@ -60,7 +66,7 @@ public class Tree {
 		// prevent division by zero
 		if (misses == 0)
 			return 1;
-		return (double) hits / (double) misses;
+		return (double) hits / ((double) hits +(double) misses);
 
 	}
 

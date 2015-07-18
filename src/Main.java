@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.math.*;
 
 public class Main {
 	public static Dictionary dict;
@@ -36,7 +35,7 @@ public class Main {
 				trainingSetFiles.add(dirent);
 			}
 			if (dirent.getName().contains(".examples")) {
-				testExamples = dirent;
+				testExamples = dirent;				
 			}
 			if (dirent.getName().contains(".labels")) {
 				testLabels = dirent;
@@ -47,7 +46,9 @@ public class Main {
 			files.add(trainingSetFiles.get(i));
 			
 		}
-
+		if (testExamples == null){
+			testExamples = new File(argv[1]);			
+		}
 		files.add(testExamples);		
 		double validationPercantage = Double.parseDouble(argv[2]) / 100;
 		int L = Integer.parseInt(argv[3]);
@@ -81,6 +82,11 @@ public class Main {
 		for (int i = 0; i < testingMessages.size(); i++){
 			messages.remove(testingMessages.get(i));
 		}
+		
+
+		
+		
+		
 	
 		// move some of training messages to be validation messages (according to validationPercantage parameter)
 		ArrayList<Message> validationMessages = new ArrayList<Message>();
@@ -102,20 +108,25 @@ public class Main {
 		Tree currentTree = null;
 		double result;
 		double bestTreeResult = 0;
-		for (int T = (int) Math.pow(2, 0); T <= Math.pow(2, L);  T *= 2){
-//			System.out.printf("buildint tree with %d inner nodes\n", T);
+		for (int T = (int) Math.pow(2, 0); T <= Math.pow(2, L);  T *= 2){			
 			currentTree = new Tree(messages, T);
-			result = currentTree.testResults(validationMessages);
-			System.out.printf("result of tree if size %d: %f\n", T, result);
-			if (result >= bestTreeResult) {
+			result = currentTree.testResults(validationMessages,null);//null = don't write results to file.
+			System.out.printf("Tree Size: %d; Success Rate: %f\n", T, result);
+			if (result >= bestTreeResult) {				
 				bestTree = currentTree;	
 				bestTreeResult = result;
 			}
 		}		
 		
-		System.out.println("testing the best tree on the test examples");
-		result = bestTree.testResults(testingMessages);
-		System.out.printf("Success Rate: %f\n", result);
+		System.out.println(bestTree.getSize());
+		for (int i=0;i<testingMessages.size();i++){
+			System.out.printf("Prediction: %d; Reality: %d\n", bestTree.predict(testingMessages.get(i)), testingMessages.get(i).getClassification());
+		}
+		
+//		
+//		System.out.println("testing the best tree on the test examples");
+//		result = bestTree.testResults(testingMessages,bw);
+//		System.out.printf("Success Rate: %f\n", result);
 		bw.close();								
 		
 		

@@ -76,11 +76,11 @@ public class Message {
 		int max = 0;
 		int best_i= 0;
 		for (int i = 1; i <= Main.numOfClassifications; i++){
-			if (max < count[i]) {
+			if (max <= count[i]) {
 				max = count[i];
 				best_i = i;
 			}
-		}		
+		}
 		return best_i;		
 	}
 	
