@@ -116,10 +116,18 @@ public class Main {
 				bestTree = currentTree;	
 				bestTreeResult = result;
 			}
-		}		
+		}						
+		
+		for (int i = 0; i < testingMessages.size(); i++){
+			Message msg = testingMessages.get(i);
+			int prediction = bestTree.predict(msg);
+			int real = msg.getClassification();
+			System.out.printf("%d. Prediction: %d; Reality: %d\n", i+1,prediction, real);
+		}
 		
 		
-		
+//		TreePrinter.print(bestTree.getRoot());
+		System.out.println("Leaves: " + bestTree.getLeafCount());		
 		//print results on screen and to output file
 		System.out.printf("Best Tree size (on validation): %d\n", bestTree.getSize());
 		System.out.println("testing the best tree on the test examples");

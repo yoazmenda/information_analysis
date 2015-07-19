@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
 
-public class Node {
+public class Node implements TreePrinter.PrintableNode{
 
 	private ArrayList<Message> messages;
 	private boolean isLeaf;
 	private String word;
 	private Node right;
 	private Node left;
+	private int classification;
 	
 	public Node(){		
 		messages = new ArrayList<Message>();
@@ -26,6 +27,7 @@ public class Node {
 		for (int i = 0; i < messages.size(); i++){
 			this.messages.add(messages.get(i));
 		}
+		classification = Message.mostCommonClassification(messages);
 	}
 	public boolean isLeaf(){
 		return isLeaf;
@@ -36,6 +38,11 @@ public class Node {
 	}
 	public Node getLeft(){
 		return left;
+	}
+	
+	public String getText(){
+		if (word==null) return Integer.toString(classification);		
+		return word;
 	}
 	public void setRight(Node node){
 		right = node;
@@ -60,7 +67,10 @@ public class Node {
 	public String getWord() {
 		return word;
 	}
-	
+
+	public int getClassification() {
+		return this.classification;
+	}
 
 
 	

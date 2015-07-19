@@ -7,3 +7,7 @@ improvemtnt:
 2. Tree class line 37 delete old messages from inner nodes
 
 3. when constructing the tree we can save only the best tree so far and the current tree being tested. so we can save memory and improve perfomance
+
+improvement:
+instead of searching for all the leaves and this requires traversig the tree. each in the best case it's n log n but its even worse because we need to regret back if this leaf is already calculated
+so i save an arraylist of all the leaves when i create the tree and add leaves to it and then it's O(n) for "free" (why free -explain)

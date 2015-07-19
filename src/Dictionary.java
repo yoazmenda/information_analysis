@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+
 //import java.math.*;
 
 public class Dictionary {
@@ -13,12 +14,14 @@ public class Dictionary {
 		wordList = new ArrayList<>();
 		wordCount = 0;
 		for (int i = 0; i < files.size(); i++) {
-			file = files.get(i);			
+			file = files.get(i);
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 				String line;
 				// read messages from file and parse each line
-				while ((line = br.readLine()) != null) {					
-					line = line.replaceAll("[-\"/=~!@#$%^&*#!&?'\\;*:(){}<>_.,]", " ").toLowerCase();					
+				while ((line = br.readLine()) != null) {
+					line = line.replaceAll(
+							"[-\"/=~!@#$%^&*#!&?'\\;*:(){}<>_.,]", " ")
+							.toLowerCase();
 					line = line.replace("\\", " ");
 					String[] words = line.split("\\s+");
 					// add all new words to dictionary:
@@ -38,24 +41,28 @@ public class Dictionary {
 
 	}
 
-	
-	public int lookupByWord(String str){
+	public int lookupByWord(String str) {
 		return wordList.indexOf(str);
 	}
-	
-	public String lookupByIndex(int n){
+
+	public String lookupByIndex(int n) {
 		return wordList.get(n);
 	}
-	
-	public String getRandomWord(){
-		int rand = (int) Math.floor(Math.random() * (wordList.size()));			
+
+	public String getRandomWord() {
+		int rand = (int) Math.floor(Math.random() * (wordList.size()));
 		return wordList.get(rand);
 	}
+
 	public void printDictionary() {
 		for (int i = 0; i < wordCount; i++) {
 			System.out.printf("%s : %d\n", wordList.get(i), i);
 		}
 	}
-	
-	
+
+
+	public ArrayList<String> getWords() {
+		return wordList;
+	}
+
 }
