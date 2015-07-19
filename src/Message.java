@@ -51,9 +51,12 @@ public class Message {
 	public boolean contains(String word) {
 		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
 			if (Main.dict.lookupByIndex(i).equals(word)) {
+//				System.out.println(word + "==" +Main.dict.lookupByIndex(i));
 				return true;
 			}
 		}
+//		System.out.print(word + " not in: ");
+		//this.print();
 		return false;
 	}
 
@@ -73,8 +76,7 @@ public class Message {
 		int count[] = new int[Main.MAXCLASSIFICATION];
 		for (int i = 0; i < Main.MAXCLASSIFICATION; i++) count[i]=0;
 		// count for each forum how many messages it has
-		for (int i = 0; i < messages.size(); i++) {
-			System.out.println(messages.get(i).getClassification());
+		for (int i = 0; i < messages.size(); i++) {			
 			count[messages.get(i).getClassification()]++;
 		}
 

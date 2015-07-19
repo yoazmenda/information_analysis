@@ -118,12 +118,12 @@ public class Main {
 			}
 		}						
 		
-		for (int i = 0; i < testingMessages.size(); i++){
-			Message msg = testingMessages.get(i);
-			int prediction = bestTree.predict(msg);
-			int real = msg.getClassification();
-			System.out.printf("%d. Prediction: %d; Reality: %d\n", i+1,prediction, real);
-		}
+//		for (int i = 0; i < testingMessages.size(); i++){
+//			Message msg = testingMessages.get(i);
+//			int prediction = bestTree.predict(msg);
+//			int real = msg.getClassification();
+//			System.out.printf("%d. Prediction: %d; Reality: %d\n", i+1,prediction, real);
+//		}
 		
 		
 //		TreePrinter.print(bestTree.getRoot());
