@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Main {
+
+	
 	public static Dictionary dict;
 	public static int numOfClassifications = 0;
 	public static int MAXCLASSIFICATION = 50;
