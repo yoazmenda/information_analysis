@@ -30,21 +30,24 @@ public class Parser {
 							wordList.add(words[j]);
 						}
 					}
-					
-					
+										
 					//set classification
 					Message newMsg = new Message();
 					if (!fileName.equals("test")){ //message belongs to training set
 						newMsg.setClassification(Integer.parseInt(fileName));
+						
 					}
 					else{ // message is from test.examples
 						newMsg.setClassification(Integer.parseInt(labelReader.readLine()));
-						newMsg.setForTesting();						
+						newMsg.setForTesting();	
+						
 					}
 					for (int k = 0; k < wordList.size(); k++){
 						newMsg.setWord(wordList.get(k), Main.dict);
 					}
 					messages.add(newMsg);
+//					System.out.print("File: "+ fileName + "; MEsssage: ");
+//					newMsg.print();
 				}
 
 			} catch (IOException e) {

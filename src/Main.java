@@ -61,10 +61,10 @@ public class Main {
 		bw.write(new Date().toString() + "\n");
 		bw.write("Learning results:\n");
 		dict = new Dictionary(files);
-
 		// create messages objects from all files (test also)(for learning and
 		// validation)
-		System.out.println("creating and parsing messages...");
+//		System.out.println("creating and parsing messages...");
+//		System.out.println("sizeeeee:"+files.size());
 		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels);
 
 		// divide to testing and learning messages:
@@ -79,7 +79,7 @@ public class Main {
 		for (int i = 0; i < testingMessages.size(); i++) {
 			messages.remove(testingMessages.get(i));
 		}
-
+		
 		// move some of training messages to be validation messages (according
 		// to validationPercantage parameter)
 		ArrayList<Message> validationMessages = new ArrayList<Message>();
@@ -94,6 +94,18 @@ public class Main {
 			messages.remove(validationMessages.get(i));
 		}
 
+//		System.out.println("train messages:---------------------------");
+//		for (int i=0;i<messages.size();i++){
+//			messages.get(i).print();
+//		}
+//		System.out.println("testingMessages messages:---------------------------");
+//		for (int i=0;i<testingMessages.size();i++){
+//			testingMessages.get(i).print();
+//		}
+//		System.out.println("validationMessages :---------------------------");
+//		for (int i=0;i<validationMessages.size();i++){
+//			validationMessages.get(i).print();
+//		}
 		// build trees in different sizes and test them on the validation
 		// messages  
 		Tree bestTree = null;
@@ -109,7 +121,6 @@ public class Main {
 				bestTreeResult = result;
 			}
 		}
-
 		TreePrinter.print(bestTree.getRoot());
 		System.out.println("Leaves: " + bestTree.getLeafCount());
 		// print results on screen and to output file
@@ -122,6 +133,6 @@ public class Main {
 
 		System.exit(0);
 
-	}// end main
+	}
 
 }

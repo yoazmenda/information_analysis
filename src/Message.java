@@ -47,6 +47,14 @@ public class Message {
 	public int getClassification() {
 		return this.classification;
 	}
+	
+	public ArrayList<String> getWords(){
+		ArrayList<String> words = new ArrayList<>();
+		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
+			words.add(Main.dict.lookupByIndex(i));
+		}
+		return words;
+	}
 
 	public boolean contains(String word) {
 		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {

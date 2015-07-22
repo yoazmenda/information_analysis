@@ -11,3 +11,8 @@ improvemtnt:
 improvement:
 instead of searching for all the leaves and this requires traversig the tree. each in the best case it's n log n but its even worse because we need to regret back if this leaf is already calculated
 so i save an arraylist of all the leaves when i create the tree and add leaves to it and then it's O(n) for "free" (why free -explain)
+
+3. stop words
+4. html words - early processing.
+
+5. when splitting - make sure no two leafs that are bros have the same classification

@@ -41,8 +41,9 @@ public class Node implements TreePrinter.PrintableNode{
 	}
 	
 	public String getText(){
-		if (word==null) return Integer.toString(classification);		
-		return word;
+		if (word==null) return Integer.toString(classification);
+		
+		return word+": "+Integer.toString(this.messages.size());
 	}
 	public void setRight(Node node){
 		right = node;
