@@ -10,6 +10,9 @@ public class Main {
 	public static int numOfClassifications = 0;
 	public static int MAXCLASSIFICATION = 50;
 
+	
+	/*improved*/
+	
 	public static void main(String argv[]) throws IOException {
 		// command line validation
 		if (argv.length != 5) {
