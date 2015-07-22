@@ -22,20 +22,19 @@ public class Tree {
 	// this procedure selects a leaf and a word and then splits the leaf and
 	// creates two new leaves
 	private void improve() {
-		Node bestLeaf = null;// = getRandomLeaf();
-		String bestWord = null;// = Main.dict.getRandomWord();
-		double bestInformationGain = 0;
+		Node bestLeaf = getRandomLeaf();
+		String bestWord = Main.dict.getRandomWord();
+		double bestIG = 0;
 		ArrayList<String> words = Main.dict.getWords();
 		Node currentLeaf;
-		String currentWord;	
+		String currentWord;
 		for (int i = 0; i < words.size(); i++) {
 			currentWord = words.get(i);
 			for (int j = 0; j < leaves.size(); j++) {
 				currentLeaf = leaves.get(j);
 				double currentIG = IG(currentWord, currentLeaf);
-//				System.out.println(currentIG);
-				if (currentIG >= bestInformationGain){
-					bestInformationGain = currentIG;
+				if (currentIG >= bestIG) {
+					bestIG = currentIG;
 					bestWord = currentWord;
 					bestLeaf = currentLeaf;
 				}
@@ -45,51 +44,52 @@ public class Tree {
 		// improvement
 		leaves.remove(bestLeaf);
 		leaves.add(bestLeaf.getLeft());
-		leaves.add(bestLeaf.getRight());		
+		leaves.add(bestLeaf.getRight());
 	}
 
 	private double IG(String X, Node L) {
-		return H(L) - H(X,L); //H(L) - H(X)
+		return H(L) - H(X, L); // H(L) - H(X)
 	}
 
-	private double H(String X, Node L) {		
-		split(L,X);
+	private double H(String X, Node L) {
+		split(L, X);
 		Node La = L.getLeft();
-		Node Lb = L.getRight();	
-		System.out.println("N(La):" + N(La));
-		System.out.println("N(L): " +N(L));
-		System.out.println("N(Lb): " + N(Lb));
-		System.out.println("H(La): "+H(La));
-		System.out.println("H(Lb)" + H(Lb));
-		double ans = (N(La)/N(L))*H(La) + (N(Lb)/N(L))*H(Lb);
+		Node Lb = L.getRight();
+		// System.out.println("N(La):" + N(La));
+		// System.out.println("N(L): " +N(L));
+		// System.out.println("N(Lb): " + N(Lb));
+//		System.out.println("H(La): " + H(La));
+		// System.out.println("H(Lb)" + H(Lb));
+		double ans = (N(La) / N(L)) * H(La) + (N(Lb) / N(L)) * H(Lb);
 		L.setRight(null);
 		L.setLeft(null);
+		L.setisLeaf();
 		return ans;
 	}
 
 	private double H(Node L) {
 		double sum = 0;
-		for (int i = 1; i < Main.numOfClassifications; i++){
-			sum += (N(L,i)/N(L))*log2(N(L)/N(L,i));
+		for (int i = 1; i <= Main.numOfClassifications; i++) {
+			 sum += (N(L,i)/N(L))*(log2(N(L)) - log2(N(L,i)));
 		}
 		return sum;
 	}
 
-	private double log2(double d) {		
-		return Math.log10(d)/Math.log10(2);
+	private double log2(double d) {
+		return Math.log10(d) / Math.log10(2);
 	}
 
 	private double N(Node L, int i) {
 		int sum = 0;
 		ArrayList<Message> msgs = L.getMessages();
-		for (int j = 0; j < msgs.size(); j++){			
-			if (msgs.get(j).getClassification() == i) sum++;
+		for (int j = 0; j < msgs.size(); j++) {
+			if (msgs.get(j).getClassification() == i)
+				sum++;
 		}
-		return (double)sum;
+		return (double) sum;
 	}
 
 	private double N(Node L) {
-		System.out.println("In N: "+ L.getMessages());
 		return L.getMessages().size();
 	}
 

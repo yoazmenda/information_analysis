@@ -72,6 +72,13 @@ public class Node implements TreePrinter.PrintableNode{
 		return this.classification;
 	}
 
+	public void setisLeaf() {
+		isLeaf = true;
+		right = null;
+		left = null;
+		word = null;		
+	}
+
 
 	
 	
