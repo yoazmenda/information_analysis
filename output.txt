@@ -1,12 +1,12 @@
-Wed Jul 22 21:25:04 IDT 2015
+Wed Jul 22 22:14:20 IDT 2015
 Learning results:
 4
 2
-1
-1
+2
+2
 1
 2
 1
-3
+4
 3
 3

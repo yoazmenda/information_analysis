@@ -47,7 +47,7 @@ public class Tree {
 		
 		
 		}
-		System.out.println("Chose: "+ bestWord+" with IG: "+ bestIG);
+//		System.out.println("Chose: "+ bestWord+" with IG: "+ bestIG);
 		split(bestLeaf, bestWord);
 		if (tenFirstWords.size() < 10){
 			tenFirstWords.add(bestWord);
@@ -59,7 +59,7 @@ public class Tree {
 	}
 
 	private double IG(String X, Node L) {
-		System.out.println("Word: "+X+" - H(L) "+H(L)+" ; H(X): " + H(X,L));
+//		System.out.println("Word: "+X+" - H(L) "+H(L)+" ; H(X): " + H(X,L));
 		return H(L) - H(X, L); // H(L) - H(X)
 	}
 
