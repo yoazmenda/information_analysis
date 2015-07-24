@@ -62,13 +62,17 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(new Date().toString() + "\n");
 		bw.write("Learning results:\n");
+		System.out.println("reading files done");
+		System.out.println("Building dictionary...");		
 		dict = new Dictionary(files);
+		System.out.println("Dictionary complete");
+		
+		
 		// create messages objects from all files (test also)(for learning and
 		// validation)
-//		System.out.println("creating and parsing messages...");
-//		System.out.println("sizeeeee:"+files.size());
-		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels);
-
+		System.out.println("Parsing Messages...");
+		ArrayList<Message> messages = Parser.CreateMessages(files, testLabels);		
+		
 		// divide to testing and learning messages:
 		ArrayList<Message> testingMessages = new ArrayList<Message>();
 		Message temp = null;
@@ -94,43 +98,35 @@ public class Main {
 
 		for (int i = 0; i < validationMessages.size(); i++) {
 			messages.remove(validationMessages.get(i));
-		}
+		}		
+		System.out.println("Parsing done");
 
-//		System.out.println("train messages:---------------------------");
-//		for (int i=0;i<messages.size();i++){
-//			messages.get(i).print();
-//		}
-//		System.out.println("testingMessages messages:---------------------------");
-//		for (int i=0;i<testingMessages.size();i++){
-//			testingMessages.get(i).print();
-//		}
-//		System.out.println("validationMessages :---------------------------");
-//		for (int i=0;i<validationMessages.size();i++){
-//			validationMessages.get(i).print();
-//		}
 		// build trees in different sizes and test them on the validation
 		// messages  
+		System.out.println("Building Tree");
 		Tree bestTree = null;
 		Tree currentTree = null;
-		double result;
 		double bestTreeResult = 0;
 		for (int T = (int) Math.pow(2, 0); T <= Math.pow(2, L); T *= 2) { 
 			currentTree = new Tree(messages, T);
-			result = currentTree.testResults(validationMessages, null);// null = don't write results to file.
-			System.out.printf("Tree Size: %d; Success Rate: %f\n", T, result);
-			if (result >= bestTreeResult) {
+			double resultOnValidation = currentTree.testResults(validationMessages, null);// null = don't write results to file.
+			double resultOnTraining = currentTree.testResults(messages, null);
+			System.out.printf("Tree Size: %d; Success Rate: validation: %f, training: %f\n", T, resultOnValidation, resultOnTraining);
+			if (resultOnValidation >= bestTreeResult) {
 				bestTree = currentTree;
-				bestTreeResult = result;
+				bestTreeResult = resultOnValidation;
 			}
 		}
-		TreePrinter.print(bestTree.getRoot());
-		System.out.println("Leaves: " + bestTree.getLeafCount());
+//		TreePrinter.print(bestTree.getRoot());
 		// print results on screen and to output file
-		System.out.printf("Best Tree size (on validation): %d\n",
-				bestTree.getSize());
+		System.out.printf("Best Tree size (on validation): %d\n",bestTree.getSize());
 		System.out.println("testing the best tree on the test examples");
-		result = bestTree.testResults(testingMessages, bw);
+		double result = bestTree.testResults(testingMessages, bw);
+		
 		System.out.printf("Success Rate: %f\n", result);
+		System.out.println("------------- First ten words --------------");		
+		bestTree.printTenWords();
+		
 		bw.close();
 
 		System.exit(0);

@@ -169,22 +169,6 @@ public class Tree {
 		return current.getClassification();
 	}
 
-	public Node getRandomLeaf() {
-		Node current = root;
-		while (!current.isLeaf()) {
-			if (Math.random() > 0.5) {
-				current = current.getLeft();
-			} else {
-				current = current.getRight();
-			}
-		}
-		return current;
-	}
-
-	public void print() {
-
-	}
-
 	public Node getRoot() {
 
 		return root;
@@ -192,6 +176,13 @@ public class Tree {
 
 	public int getLeafCount() {
 		return this.leaves.size();
+	}
+
+	public void printTenWords() {
+		for (int i=0;i<tenFirstWords.size(); i++){
+			System.out.println(i+1+": " +tenFirstWords.get(i));
+		}
+		
 	}
 
 }

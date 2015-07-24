@@ -49,17 +49,6 @@ public class Dictionary {
 		return wordList.get(n);
 	}
 
-	public String getRandomWord() {
-		int rand = (int) Math.floor(Math.random() * (wordList.size()));
-		return wordList.get(rand);
-	}
-
-	public void printDictionary() {
-		for (int i = 0; i < wordCount; i++) {
-			System.out.printf("%s : %d\n", wordList.get(i), i);
-		}
-	}
-
 
 	public ArrayList<String> getWords() {
 		return wordList;
