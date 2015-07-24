@@ -1,0 +1,10 @@
+#!/bin/bash
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 1.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 2.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 3.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 4.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 5.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 6.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 7.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 8.output &
+java -jar tree_learn.jar $1 $2 $3 $4 $5 > 9.output &
