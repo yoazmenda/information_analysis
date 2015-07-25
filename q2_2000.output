@@ -9,3 +9,5 @@ Tree Size: 1; Success Rate: validation: 0.495625, training: 0.501835
 Tree Size: 2; Success Rate: validation: 0.562500, training: 0.572324
 Tree Size: 4; Success Rate: validation: 0.580625, training: 0.587920
 Tree Size: 8; Success Rate: validation: 0.578750, training: 0.589297
+Tree Size: 16; Success Rate: validation: 0.606875, training: 0.614679
+Tree Size: 32; Success Rate: validation: 0.606250, training: 0.617737
