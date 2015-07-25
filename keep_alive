@@ -1,3 +1,3 @@
 #!/bin/bash
-while true; do echo "Keep-Alive..."; sleep 5; done
+while true; do echo "------";cat q1.output; sleep 30; done
 

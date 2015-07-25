@@ -53,5 +53,9 @@ public class Dictionary {
 	public ArrayList<String> getWords() {
 		return wordList;
 	}
+	
+	public int getCout(){
+		return wordCount;
+	}
 
 }
