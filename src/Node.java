@@ -42,7 +42,7 @@ public class Node implements TreePrinter.PrintableNode{
 	}
 	
 	public String getText(){
-		if (word==null) return Integer.toString(classification);
+		if (word==null) return Integer.toString(classification)+": id="+this.leafID;
 		
 		return word+": "+Integer.toString(this.messages.size());
 	}

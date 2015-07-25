@@ -7,6 +7,7 @@ public class Tree {
 	private int size;
 	ArrayList<Node> leaves;
 	double[][] cache;
+	int leafIdGenerator;
 
 	ArrayList<String> tenFirstWords;
 
@@ -16,9 +17,10 @@ public class Tree {
 		size = innerNodes;
 		leaves = new ArrayList<Node>();
 		leaves.add(root);
-		cache = new double[Main.dict.getCout()][innerNodes];
-		for (int i = 0; i < Main.dict.getCout(); i++){
-			for (int j = 0; j < innerNodes; j++){
+		cache = new double[innerNodes+1][Main.dict.getCout()];
+		leafIdGenerator = 0;
+		for (int i = 0; i < innerNodes; i++) {
+			for (int j = 0; j < Main.dict.getCout(); j++) {
 				cache[i][j] = -1;
 			}
 		}
@@ -39,6 +41,7 @@ public class Tree {
 		String currentWord;
 		ArrayList<String> words;
 		ArrayList<Message> msgs;
+		double currentIG;
 		for (int i = 0; i < leaves.size(); i++) {
 			currentLeaf = leaves.get(i);
 			msgs = currentLeaf.getMessages();
@@ -46,17 +49,16 @@ public class Tree {
 				words = msgs.get(j).getWords();
 				for (int k = 0; k < words.size(); k++) {
 					currentWord = words.get(k);
-//					double currentIG = cache[currentLeaf.getLeafId()][0];
-					
-					
-					
-					
-					
-					double currentIG = IG(currentWord, currentLeaf);
-					
-					
-					
-					
+					currentIG = cache[currentLeaf.getLeafId()][Main.dict.lookupByWord(currentWord)];
+					if (currentIG == -1){
+//						System.out.println("MISS: ");
+						currentIG = IG(currentWord, currentLeaf);
+						cache[currentLeaf.getLeafId()][Main.dict.lookupByWord(currentWord)] = currentIG;
+					}
+					else{
+//						System.out.println("hit: ");
+					}
+//					System.out.println(currentIG);
 					
 					if (currentIG >= bestIG) {
 						bestIG = currentIG;
@@ -72,8 +74,19 @@ public class Tree {
 			tenFirstWords.add(bestWord);
 		}
 		// improvement
+
+		// delete all entries for this leaf id
+		for (int j = 0; j < Main.dict.getCout(); j++) {
+			cache[bestLeaf.getLeafId()][j] = -1;
+		}
+		
+		bestLeaf.getLeft().setLeafID(bestLeaf.getLeafId());
+		bestLeaf.getRight().setLeafID(++leafIdGenerator);
+		bestLeaf.setLeafID(-1);
+		
 		leaves.remove(bestLeaf);
 		leaves.add(bestLeaf.getLeft());
+
 		leaves.add(bestLeaf.getRight());
 	}
 
