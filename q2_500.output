@@ -1,0 +1,29 @@
+reading files from disk...
+reading files done
+Building dictionary...
+Dictionary complete
+Parsing Messages...
+Parsing done
+Building Tree
+Tree Size: 1; Success Rate: validation: 0.482500, training: 0.505501
+Tree Size: 2; Success Rate: validation: 0.532500, training: 0.555012
+Tree Size: 4; Success Rate: validation: 0.532500, training: 0.556846
+Tree Size: 8; Success Rate: validation: 0.555000, training: 0.586186
+Tree Size: 16; Success Rate: validation: 0.617500, training: 0.628362
+Tree Size: 32; Success Rate: validation: 0.597500, training: 0.652812
+Tree Size: 64; Success Rate: validation: 0.575000, training: 0.687042
+Tree Size: 128; Success Rate: validation: 0.587500, training: 0.795232
+Best Tree size (on validation): 16
+testing the best tree on the test examples
+Success Rate: 0.590000
+------------- First ten words --------------
+1: postbody
+2: iep
+3: things
+4: 12
+5: waiver
+6: charged
+7: yeast
+8: state
+9: school
+10: district
