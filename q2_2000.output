@@ -11,3 +11,20 @@ Tree Size: 4; Success Rate: validation: 0.580625, training: 0.587920
 Tree Size: 8; Success Rate: validation: 0.578750, training: 0.589297
 Tree Size: 16; Success Rate: validation: 0.606875, training: 0.614679
 Tree Size: 32; Success Rate: validation: 0.606250, training: 0.617737
+Tree Size: 64; Success Rate: validation: 0.610625, training: 0.630428
+Tree Size: 128; Success Rate: validation: 0.681250, training: 0.700061
+Best Tree size (on validation): 128
+testing the best tree on the test examples
+Success Rate: 0.659000
+------------- First ten words --------------
+1: postbody
+2: iep
+3: school
+4: he
+5: yeast
+6: issues
+7: his
+8: progress
+9: arsenal
+10: attention
+
