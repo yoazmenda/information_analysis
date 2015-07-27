@@ -5,25 +5,19 @@ Dictionary complete
 Parsing Messages...
 Parsing done
 Building Tree
-Tree Size: 1; Success Rate: validation: 0.500000, training: 0.500000
-Tree Size: 2; Success Rate: validation: 0.750000, training: 0.750000
-Tree Size: 4; Success Rate: validation: 0.750000, training: 1.000000
-Tree Size: 8; Success Rate: validation: 0.750000, training: 1.000000
-Tree Size: 16; Success Rate: validation: 0.750000, training: 1.000000
-Tree Size: 32; Success Rate: validation: 0.750000, training: 1.000000
-Tree Size: 64; Success Rate: validation: 0.750000, training: 1.000000
-Tree Size: 128; Success Rate: validation: 0.750000, training: 1.000000
-Best Tree size (on validation): 128
+Tree Size: 1; Success Rate: validation: 0.250000, training: 0.529412
+Tree Size: 2; Success Rate: validation: 0.500000, training: 0.764706
+Tree Size: 4; Success Rate: validation: 1.000000, training: 1.000000
+Tree Size: 8; Success Rate: validation: 0.500000, training: 1.000000
+Tree Size: 16; Success Rate: validation: 0.500000, training: 1.000000
+Tree Size: 32; Success Rate: validation: 0.500000, training: 1.000000
+Tree Size: 64; Success Rate: validation: 0.500000, training: 1.000000
+Tree Size: 128; Success Rate: validation: 0.500000, training: 1.000000
+Best Tree size (on validation): 4
 testing the best tree on the test examples
 Success Rate: 0.400000
 ------------- First ten words --------------
 1: postbody
 2: that
-3: an
-4: 7y
-5: inner
-6: once
-7: 0
-8: marge
-9: marge
-10: marge
+3: than
+4: there
