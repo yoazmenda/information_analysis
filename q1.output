@@ -1,0 +1,29 @@
+reading files from disk...
+reading files done
+Building dictionary...
+Dictionary complete
+Parsing Messages...
+Parsing done
+Building Tree
+Tree Size: 1; Success Rate: validation: 0.380000, training: 0.383170
+Tree Size: 2; Success Rate: validation: 0.418333, training: 0.426062
+Tree Size: 4; Success Rate: validation: 0.568333, training: 0.584559
+Tree Size: 8; Success Rate: validation: 0.583333, training: 0.600082
+Tree Size: 16; Success Rate: validation: 0.618333, training: 0.627859
+Tree Size: 32; Success Rate: validation: 0.661667, training: 0.674428
+Tree Size: 64; Success Rate: validation: 0.683333, training: 0.719771
+Tree Size: 128; Success Rate: validation: 0.726667, training: 0.799428
+Best Tree size (on validation): 128
+testing the best tree on the test examples
+Success Rate: 0.675000
+------------- First ten words --------------
+1: dod
+2: bike
+3: graphics
+4: writes
+5: god
+6: god
+7: you
+8: be
+9: me
+10: gzip

@@ -6,19 +6,19 @@ import java.util.ArrayList;
 
 public class Parser {
 	static int ppp = 0;
-	public static ArrayList<Message> CreateMessages(ArrayList<File> files, File labels) {
+	public static ArrayList<Message> CreateMessages(ArrayList<File> files, File labels) throws Exception{
 		File file = null;
-		ArrayList<Message> messages = new ArrayList<>();
+		ArrayList<Message> messages = new ArrayList<Message>();
 		for (int i = 0; i < files.size(); i++) {
 			file = files.get(i);
 			String fileName = file.getName().substring(0, file.getName().indexOf('.'));			
-			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			/*try (*/BufferedReader br = new BufferedReader(new FileReader(file));
 				@SuppressWarnings("resource")
 				BufferedReader labelReader = new BufferedReader(new FileReader(labels));
 				String line;
 				// read messages from file and parse each line
 				while ((line = br.readLine()) != null) {
-					ArrayList<String> wordList = new ArrayList<>();
+					ArrayList<String> wordList = new ArrayList<String>();
 					line = line.replaceAll(
 							"[-\"/=~!@#$%^&*#!&?'\\;*:(){}<>_.,]", " ")
 							.toLowerCase();
@@ -50,11 +50,11 @@ public class Parser {
 //					newMsg.print();
 				}
 
-			} catch (IOException e) {
-				System.err.println("error reading from file");
-				System.err.println(e);
-				System.exit(-1);
-			}
+//			} catch (IOException e) {
+//				System.err.println("error reading from file");
+//				System.err.println(e);
+//				System.exit(-1);
+//			}
 		}
 		return messages;
 	}

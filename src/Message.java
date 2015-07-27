@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class Message {
 
@@ -49,36 +52,48 @@ public class Message {
 	}
 	
 	public ArrayList<String> getWords(){
-		ArrayList<String> words = new ArrayList<>();
-		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
-			words.add(Main.dict.lookupByIndex(i));
-		}
+		ArrayList<String> words = new ArrayList<String>();
+		Set<Map.Entry<String, Integer>> entries = Main.dict.getWords().entrySet();
+		
+                
+                Iterator<Map.Entry<String, Integer>> iter = entries.iterator();
+		while(iter.hasNext()) {
+			Map.Entry<String, Integer> entry = iter.next();
+			
+			// ************ //
+			String mystr = entry.getKey();
+                        if (this.contains(mystr)){
+                            words.add(mystr);
+                        }
+                }
 		return words;
 	}
 
 	public boolean contains(String word) {
-		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
-			if (Main.dict.lookupByIndex(i).equals(word)) {
-//				System.out.println(word + "==" +Main.dict.lookupByIndex(i));
-				return true;
-			}
-		}
-//		System.out.print(word + " not in: ");
-		//this.print();
-		return false;
+//		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
+//			if (Main.dict.lookupByIndex(i).equals(word)) {
+////				System.out.println(word + "==" +Main.dict.lookupByIndex(i));
+//				return true;
+//			}
+//		}
+////		System.out.print(word + " not in: ");
+//		//this.print();
+//		return false;
+            int mykey = Main.dict.getWords().get(word);
+            return this.bitset.get(mykey);
 	}
 
 	public void printMessageIndices() {
 		System.out.println(this.bitset.toString());
 	}
 
-	public void print() {
-		System.out.printf("%d: ", classification);
-		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
-			System.out.printf("%s ", Main.dict.lookupByIndex(i));
-		}
-		System.out.println();
-	}
+//	public void print() {
+//		System.out.printf("%d: ", classification);
+//		for (int i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1)) {
+//			System.out.printf("%s ", Main.dict.lookupByIndex(i));
+//		}
+//		System.out.println();
+//	}
 
 	public static int mostCommonClassification(ArrayList<Message> messages) {
 		int count[] = new int[Main.MAXCLASSIFICATION];

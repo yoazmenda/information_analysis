@@ -9,6 +9,7 @@ public class Node implements TreePrinter.PrintableNode{
 	private Node right;
 	private Node left;
 	private int classification;
+	private int leafID;
 	
 	public Node(){		
 		messages = new ArrayList<Message>();
@@ -41,7 +42,7 @@ public class Node implements TreePrinter.PrintableNode{
 	}
 	
 	public String getText(){
-		if (word==null) return Integer.toString(classification);
+		if (word==null) return Integer.toString(classification)+": id="+this.leafID;
 		
 		return word+": "+Integer.toString(this.messages.size());
 	}
@@ -78,6 +79,14 @@ public class Node implements TreePrinter.PrintableNode{
 		right = null;
 		left = null;
 		word = null;		
+	}
+
+	public void setLeafID(int i) {
+		leafID = i;
+	}
+
+	public int getLeafId() {
+		return leafID;
 	}
 
 

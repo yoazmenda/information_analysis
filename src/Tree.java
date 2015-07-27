@@ -6,37 +6,60 @@ public class Tree {
 	private Node root;
 	private int size;
 	ArrayList<Node> leaves;
+	double[][] cache;
+	int leafIdGenerator;
+
 	ArrayList<String> tenFirstWords;
 
 	public Tree(ArrayList<Message> messages, int innerNodes) {
 		root = new Node(messages);
+		root.setLeafID(0);
 		size = innerNodes;
 		leaves = new ArrayList<Node>();
 		leaves.add(root);
+		cache = new double[innerNodes+1][Main.dict.getCout()];
+		leafIdGenerator = 0;
+		for (int i = 0; i < innerNodes; i++) {
+			for (int j = 0; j < Main.dict.getCout(); j++) {
+				cache[i][j] = -1;
+			}
+		}
 		tenFirstWords = new ArrayList<String>();
 		for (int i = 0; i < innerNodes; i++) {
 			improve();
 		}
+
 	}
 
 	// this procedure selects a leaf and a word and then splits the leaf and
 	// creates two new leaves
 	private void improve() {
-		Node bestLeaf =null;// getRandomLeaf();
+		Node bestLeaf = null;// getRandomLeaf();
 		String bestWord = null;// Main.dict.getRandomWord();
 		double bestIG = 0;
 		Node currentLeaf;
 		String currentWord;
 		ArrayList<String> words;
 		ArrayList<Message> msgs;
-		for (int i = 0; i < leaves.size(); i++){
+		double currentIG;
+		for (int i = 0; i < leaves.size(); i++) {
 			currentLeaf = leaves.get(i);
 			msgs = currentLeaf.getMessages();
-			for (int j = 0; j < msgs.size(); j++){
+			for (int j = 0; j < msgs.size(); j++) {
 				words = msgs.get(j).getWords();
-				for (int k = 0 ; k < words.size(); k++){
+				for (int k = 0; k < words.size(); k++) {
 					currentWord = words.get(k);
-					double currentIG = IG(currentWord, currentLeaf);
+					currentIG = cache[currentLeaf.getLeafId()][Main.dict.lookupByWord(currentWord)];
+					if (currentIG == -1){
+//						System.out.println("MISS: ");
+						currentIG = IG(currentWord, currentLeaf);
+						cache[currentLeaf.getLeafId()][Main.dict.lookupByWord(currentWord)] = currentIG;
+					}
+					else{
+//						System.out.println("hit: ");
+					}
+//					System.out.println(currentIG);
+					
 					if (currentIG >= bestIG) {
 						bestIG = currentIG;
 						bestWord = currentWord;
@@ -44,29 +67,38 @@ public class Tree {
 					}
 				}
 			}
-		
-		
+
 		}
-//		System.out.println("Chose: "+ bestWord+" with IG: "+ bestIG);
 		split(bestLeaf, bestWord);
-		if (tenFirstWords.size() < 10){
+		if (tenFirstWords.size() < 10) {
 			tenFirstWords.add(bestWord);
 		}
 		// improvement
+
+		// delete all entries for this leaf id
+		for (int j = 0; j < Main.dict.getCout(); j++) {
+			cache[bestLeaf.getLeafId()][j] = -1;
+		}
+		
+		bestLeaf.getLeft().setLeafID(bestLeaf.getLeafId());
+		bestLeaf.getRight().setLeafID(++leafIdGenerator);
+		bestLeaf.setLeafID(-1);
+		
 		leaves.remove(bestLeaf);
 		leaves.add(bestLeaf.getLeft());
+
 		leaves.add(bestLeaf.getRight());
 	}
 
 	private double IG(String X, Node L) {
-//		System.out.println("Word: "+X+" - H(L) "+H(L)+" ; H(X): " + H(X,L));
+		// System.out.println("Word: "+X+" - H(L) "+H(L)+" ; H(X): " + H(X,L));
 		return H(L) - H(X, L); // H(L) - H(X)
 	}
 
 	private double H(String X, Node L) {
 		split(L, X);
 		Node La = L.getLeft();
-		Node Lb = L.getRight(); 
+		Node Lb = L.getRight();
 		double ans = ((N(La) / N(L)) * H(La)) + ((N(Lb) / N(L)) * H(Lb));
 		L.setRight(null);
 		L.setLeft(null);
@@ -77,13 +109,13 @@ public class Tree {
 	private double H(Node L) {
 		double sum = 0;
 		for (int i = 1; i <= Main.numOfClassifications; i++) {
-			 if (N(L,i) == 0 || N(L) == 0) 
-				 ;
-			 else{
-				 sum += (N(L,i)/N(L))*(log2(N(L)) - log2(N(L,i)));
-			 }
+			if (N(L, i) == 0 || N(L) == 0)
+				;
+			else {
+				sum += (N(L, i) / N(L)) * (log2(N(L)) - log2(N(L, i)));
+			}
 		}
-//		System.out.println(sum);
+		// System.out.println(sum);
 		return sum;
 	}
 
@@ -169,22 +201,6 @@ public class Tree {
 		return current.getClassification();
 	}
 
-	public Node getRandomLeaf() {
-		Node current = root;
-		while (!current.isLeaf()) {
-			if (Math.random() > 0.5) {
-				current = current.getLeft();
-			} else {
-				current = current.getRight();
-			}
-		}
-		return current;
-	}
-
-	public void print() {
-
-	}
-
 	public Node getRoot() {
 
 		return root;
@@ -192,6 +208,13 @@ public class Tree {
 
 	public int getLeafCount() {
 		return this.leaves.size();
+	}
+
+	public void printTenWords() {
+		for (int i = 0; i < tenFirstWords.size(); i++) {
+			System.out.println(i + 1 + ": " + tenFirstWords.get(i));
+		}
+
 	}
 
 }
