@@ -60,8 +60,8 @@ public class Main {
 		System.out.println("reading files from disk...");
 		FileWriter fw = new FileWriter(output.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
-		bw.write(new Date().toString() + "\n");
-		bw.write("Learning results:\n");
+//		bw.write(new Date().toString() + "\n");
+//		bw.write("Learning results:\n");
 		System.out.println("reading files done");
 		System.out.println("Building dictionary...");		
 		dict = new Dictionary(files);
