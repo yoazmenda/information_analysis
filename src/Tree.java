@@ -61,9 +61,10 @@ public class Tree {
 //					System.out.println(currentIG);
 					
 					if (currentIG >= bestIG) {
-						bestIG = currentIG;
-						bestWord = currentWord;
-						bestLeaf = currentLeaf;
+							bestIG = currentIG;
+							bestWord = currentWord;
+							bestLeaf = currentLeaf;
+						
 					}
 				}
 			}

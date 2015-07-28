@@ -29,7 +29,7 @@ public class Dictionary {
 					String[] words = line.split("\\s+");
 					// add all new words to dictionary:
 					for (int j = 1; j < words.length; j++) {
-						if (!wordList.containsKey(words[j])) {
+						if (!wordList.containsKey(words[j]) && !Main.isStopWord(words[j])){
 							wordList.put(words[j],wordCount++);
 						}
 					}

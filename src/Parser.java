@@ -26,7 +26,7 @@ public class Parser {
 					String[] words = line.split("\\s+");
 					// add all new words to dictionary:
 					for (int j = 1; j < words.length; j++) {
-						if (!wordList.contains(words[j])) {
+						if (!wordList.contains(words[j]) && !Main.isStopWord(words[j])) {
 							wordList.add(words[j]);
 						}
 					}
