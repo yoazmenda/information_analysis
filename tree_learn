@@ -1,2 +1,0 @@
-#!/bin/bash
-java -jar tree_learn.jar $1 $2 $3 $4 $5

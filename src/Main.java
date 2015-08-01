@@ -217,7 +217,7 @@ public class Main {
 				bestTreeResult = resultOnValidation;
 			}
 		}
-		TreePrinter.print(bestTree.getRoot());
+//		TreePrinter.print(bestTree.getRoot());
 		// print results on screen and to output file
 		System.out.printf("Best Tree size (on validation): %d\n",
 				bestTree.getSize());

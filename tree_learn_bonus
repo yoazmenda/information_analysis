@@ -1,0 +1,3 @@
+#!/bin/bash
+java -jar tree_learn_bonus.jar $1 $2 $3 $4 $5
+
